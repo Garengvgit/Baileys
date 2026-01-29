@@ -111,6 +111,18 @@ export const makeCommunitiesSocket = (config: SocketConfig) => {
 
 	return {
 		...sock,
+
+		/**
+		 * Send a WhatsApp Status/Story (broadcast).
+		 * Usage:
+		 *   await sock.sendStatus({ text: 'hello status' })
+		 *   await sock.sendStatus({ image: { url: './a.jpg' }, caption: 'hi' })
+		 */
+		sendStatus: async (content: any, options: any = {}) => {
+			// official status JID on WhatsApp
+			return await sock.sendMessage('status@broadcast', content, options)
+		},
+
 		communityMetadata,
 		communityCreate: async (subject: string, body: string) => {
 			const descriptionId = generateMessageID().substring(0, 12)
